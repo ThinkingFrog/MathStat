@@ -1,0 +1,11 @@
+# VSCode
+build/
+.vscode/
+
+# Python
+__pycache__/
+
+# Intellij IDEA
+out/
+.idea/
+*.iml
