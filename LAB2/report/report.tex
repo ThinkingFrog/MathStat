@@ -1,0 +1,261 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[left=20mm,right=10mm, top=20mm,bottom=20mm,bindingoffset=0mm]{geometry}
+
+\setlength{\parskip}{6pt}\graphicspath{{images/}}\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+
+    \begin{titlepage}
+        \begin{center}
+            \large
+            Санкт-Петербургский политехнический университет\\Петра Великого\\
+            \vspace{0.5cm}
+            Институт прикладной математики и механики\\
+            \vspace{0.25cm}
+            Кафедра «Прикладная математика»
+            \vfill
+            \textsc{\LARGE\textbf{Отчет по лабораторной работе №2}}\\[5mm]
+            \Large
+            по дисциплине\\"Математическая статистика"
+        \end{center}
+        \vfill
+        \begin{tabular}{l p{175pt} l}
+            Выполнил студент \\ группы 3630102/80201 && Хрипунков Дмитрий Викторович
+            \vspace{0.25cm}
+            \\Проверил \\ доцент, к.ф.-м.н. && Баженов Александр Николаевич
+        \end{tabular}
+        \vfill
+        \begin{center}
+            Санкт-Петербург \\ 2021 г.
+        \end{center}
+    \end{titlepage}
+
+\newpage
+\begin{center}
+    \tableofcontents
+    \setcounter{page}{2}
+\end{center}
+\newpage
+\begin{center}
+    \listoftables
+\end{center}
+
+\newpage
+\section{Постановка задачи}
+Для 5 распределений:
+\begin{itemize}
+    \item Нормальное распределение $N(x,0,1)$
+    \item Распределение Коши $C(x,0,1)$
+    \item Распределение Лапласа $L(x,0,\frac{1}{\sqrt{2}})$
+    \item Распределение Пуассона $P(k,10)$
+    \item Равномерное распределение $U(x,-\sqrt{3},\sqrt{3})$
+\end{itemize}
+
+Необходимо:
+\begin{enumerate}
+    \item Сгенерировать выборки размером 10, 100 и 1000 элементов
+    \item Вычислить для каждой них статистические характеристики положения данных: \\ $\overline{x}, med x, z_R, z_Q, z_tr$
+    \item Повторить данные вычисления 1000 раз для каждой выборки и найти среднее характеристик положения $E(z)=\overline{z}$ и вычислить оценку дисперсии $D(z)=\overline{z^2}-{\overline{z}}^2$
+    \item Представить полученные результаты в виде таблиц
+\end{enumerate}
+
+\section{Теория}
+\subsection{Рассматриваемые распределения}
+Плотности:
+\begin{itemize}
+		\item Нормальное распределение
+		    \begin{equation}
+			    N(x,0,1)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}
+			    \label{normal} 
+			\end{equation}
+		\item Распределение Коши
+		    \begin{equation}
+				C(x,0,1)=\frac{1}{\pi}\frac{1}{x^2+1}
+				\label{cauchy}
+			\end{equation} 
+		\item Распределение Лапласа
+		    \begin{equation}
+				L(x,0,\frac{1}{\sqrt{2}})=\frac{1}{\sqrt{2}}e^{-\sqrt{2}|x|}
+				\label{laplace} 
+			\end{equation}
+		\item Распределение Пуассона
+		    \begin{equation}
+				P(k,10)=\frac{10^k}{k!}e^{-10}
+				\label{poisson}
+			\end{equation}
+		\item Равномерное распределение
+		    \begin{equation}
+				U(x,-\sqrt{3},\sqrt{3})=
+				\begin{cases}
+					\frac{1}{2\sqrt{3}},|x|\leq\sqrt{3}\\0,|x|>\sqrt{3}
+				\end{cases}
+				\label{uniform}
+			\end{equation}
+\end{itemize}
+
+\subsection{Выборочные числовые характеристики}
+\textit{Вариационный ряд} - последовательность элементов выборки, расположенных в неубывающем порядке.
+
+\subsubsection{Характеристики положения}
+\begin{itemize}
+    \item Выборочное среднее
+        \begin{equation}
+            \overline{x}=\frac{1}{n}\sum_{i=1}^{n}{x_i}
+		\end{equation}
+	\item Выборочная медиана
+	    \begin{equation}
+			med x=
+			\begin{cases}
+			    x_{l+1},n=2l+1\\
+				\frac{x_l+x_{l+1}}{2},n=2l
+			\end{cases}
+		\end{equation}
+	\item Полусумма экстремальных выборочных элементов
+	    \begin{equation}
+			z_R=\frac{x_1 + x_n}{2}
+		\end{equation}
+	\item Полусумма квартилей
+	    \newline Выборочная квартиль $z_p$ порядка $p$ определяется формулой
+	    \begin{equation}
+		    z_p =
+			\begin{cases}
+			    x_{[np]+1},np-\text{дробное}\\
+		      	x_{np},np-\text{целое}
+	        \end{cases}
+		\end{equation}
+	    Полусумма квартилей
+	    \begin{equation}
+			z_Q=\frac{z_{1/4}+z_{3/4}}{2}
+		\end{equation}
+	\item Усечённое среднее
+	    \begin{equation}
+			z_{tr}=\frac{1}{n-2r}\sum_{i=r+1}^{n-r}{x_i}, r\approx\frac{n}{4}
+		\end{equation}
+\end{itemize}
+
+\subsubsection{Характеристики рассеивания}
+Выборочная дисперсия определяется по формуле:
+\begin{equation}
+    D=\frac{1}{n}\sum^{n}_{i=1}{(x_i-\overline{x})^2}
+\end{equation}
+
+\section{Реализация}
+Лабораторная работа выполнена на языке Python в виртуальной среде Anaconda с интерпретатором версии 3.9 в среде разработки Visual Studio Code. Дополнительные зависимости:
+\begin{itemize}
+    \item scipy
+    \item numpy
+\end{itemize}
+
+Исходный код размещён в git-репозитории на GitHub: \\ https://github.com/ThinkingFrog/MathStat
+
+\section {Результаты}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l||c|c|c|c|c|}
+        \hline
+        & $\overline{x}$ & $med(x)$ & $z_R$ & $z_Q$ & $z_{tr}$\\\hline\hline
+        size 10 & & & & &\\\hline
+        $E(z)$ & -0.00779 & -0.011969 & -0.005808 & 0.311485 & 0.270025\\\hline
+        $D(z)$ & 0.102041 & 0.145774 & 0.193123 & 0.127061 & 0.118055\\\hline
+        size 100 & & & & &\\\hline
+        $E(z)$ & -0.005872 & -0.005139 & -0.007449 & 0.008219 & 0.01996\\\hline
+        $D(z)$ & 0.009648 & 0.015723 & 0.088372 & 0.012041 & 0.011797\\\hline
+        size 1000 & & & & &\\\hline
+        $E(z)$ & 0.002306 & 0.002293 & -0.001362 & 0.004324 & 0.005186\\\hline
+        $D(z)$ & 0.001008 & 0.00159 & 0.060168 & 0.001293 & 0.001218\\\hline
+    \end{tabular}
+    \caption{Нормальное распределение \eqref{normal}}
+    \label{tab:normal}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l||c|c|c|c|c|}
+        \hline
+        & $\overline{x}$ & $med(x)$ & $z_R$ & $z_Q$ & $z_{tr}$\\\hline\hline
+        size 10 & & & & &\\\hline
+        $E(z)$ & 1.763177 & 0.01671 & 8.553413 & 1.21915 & 0.740644\\\hline
+        $D(z)$ & 68504.014378 & 0.326009 & 1712320.283313 & 6.459315 & 1.688332\\\hline
+        size 100 & & & & &\\\hline
+        $E(z)$ & -0.433576 & -0.004777 & -21.449878 & 0.030348 & 0.036558\\\hline
+        $D(z)$ & 399.623127 & 0.024799 & 972319.02976 & 0.054371 & 0.026246\\\hline
+        size 1000 & & & & &\\\hline
+        $E(z)$ & -3.422087 & 0.000998 & -1709.210332 & 0.003389 & 0.004897\\\hline
+        $D(z)$ & 5286.087697 & 0.00247 & 1308671056.451356 & 0.005286 & 0.002638\\\hline
+    \end{tabular}
+    \caption{Распределение Коши\eqref{cauchy}}
+    \label{tab:cauchy}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l||c|c|c|c|c|}
+        \hline
+        & $\overline{x}$ & $med(x)$ & $z_R$ & $z_Q$ & $z_{tr}$\\\hline\hline
+        size 10 & & & & &\\\hline
+        $E(z)$ & 0.018466 & 0.011032 & 0.035357 & 0.308859 & 0.242988\\\hline
+        $D(z)$ & 0.090096 & 0.067211 & 0.383983 & 0.113434 & 0.076484\\\hline
+        size 100 & & & & &\\\hline
+        $E(z)$ & -0.00017 & 0.000955 & 0.001656 & 0.013143 & 0.019585\\\hline
+        $D(z)$ & 0.009944 & 0.00565 & 0.396589 & 0.009435 & 0.006135\\\hline
+        size 1000 & & & & &\\\hline
+        $E(z)$ & 0.000136 & -0.000244 & 0.005736 & 0.001574 & 0.001698\\\hline
+        $D(z)$ & 0.00098 & 0.000549 & 0.392563 & 0.001017 & 0.000633\\\hline
+    \end{tabular}
+    \caption{Распределение Лапласа\eqref{laplace}}
+    \label{tab:laplace}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l||c|c|c|c|c|}
+        \hline
+        & $\overline{x}$ & $med(x)$ & $z_R$ & $z_Q$ & $z_{tr}$\\\hline\hline
+        size 10 & & & & &\\\hline
+        $E(z)$ & 9.9704 & 9.836 & 10.247 & 10.884 & 10.734167\\\hline
+        $D(z)$ & 1.025484 & 1.422104 & 2.043491 & 1.383544 & 1.282694\\\hline
+        size 100 & & & & &\\\hline
+        $E(z)$ & 9.9953 & 9.844 & 10.9535 & 9.959 & 9.93784\\\hline
+        $D(z)$ & 0.091363 & 0.195664 & 0.969588 & 0.147819 & 0.113388\\\hline
+        size 1000 & & & & &\\\hline
+        $E(z)$ & 10.004115 & 9.9975 & 11.691 & 9.9965 & 9.871514\\\hline
+        $D(z)$ & 0.009671 & 0.002244 & 0.668519 & 0.002238 & 0.011212\\\hline
+    \end{tabular}
+    \caption{Распределение Пуассона\eqref{poisson}}
+    \label{tab:poisson}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l||c|c|c|c|c|}
+        \hline
+        & $\overline{x}$ & $med(x)$ & $z_R$ & $z_Q$ & $z_{tr}$\\\hline\hline
+        size 10 & & & & &\\\hline
+        $E(z)$ & -0.008606 & -0.029117 & 0.001577 & 0.313808 & 0.303191\\\hline
+        $D(z)$ & 0.094915 & 0.215468 & 0.046358 & 0.125346 & 0.141631\\\hline
+        size 100 & & & & &\\\hline
+        $E(z)$ & -0.001963 & -0.002076 & 0.000305 & 0.012142 & 0.03171\\\hline
+        $D(z)$ & 0.009783 & 0.029705 & 0.000572 & 0.014477 & 0.019368\\\hline
+        size 1000 & & & & &\\\hline
+        $E(z)$ & 0.002136 & 0.004124 & 0.000021 & 0.003446 & 0.006501\\\hline
+        $D(z)$ & 0.000982 & 0.002905 & 0.000006 & 0.001459 & 0.001937\\\hline
+    \end{tabular}
+    \caption{Равномерное распределение\eqref{uniform}}
+    \label{tab:uniform}
+\end{table}
+
+\section{Обсуждение}
+Полученные данные показывают, что выборки из большего количества элементов лучше уточняют значение характеристик случайной величины. 
+
+Для нормального, равномерного распределения и распределения Лапласа эти значения схожи и близки к нулю. У распределение Пуассона среднее значение $E(z)$ во всех выборках близко к 10, это значение параметра задания данного распределения. В характеристиках распределения Коши появляются аномально большие значения, это может объясняться неопределенностью математического ожидания и бесконечностью дисперсии случайной величины, распределенной по закону Коши.
+\end{document}
