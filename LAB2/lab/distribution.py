@@ -52,6 +52,8 @@ class CustomDistr:
 
         E_list = list()
         D_list = list()
+        E_plus_sqrt_D = list()
+        E_minus_sqrt_D = list()
 
         for idx in range(times):
             self._generate_distr()
@@ -65,5 +67,7 @@ class CustomDistr:
         for item in [list_mean, list_median, list_zr, list_zq, list_ztr]:
             E_list.append(round(np.mean(item), 6))
             D_list.append(round(np.std(item) ** 2, 6))
+            E_plus_sqrt_D.append(round(np.mean(item) + math.sqrt(np.std(item) ** 2), 6))
+            E_minus_sqrt_D.append(round(np.mean(item) - math.sqrt(np.std(item) ** 2), 6))
 
-        return E_list, D_list
+        return E_list, D_list, E_plus_sqrt_D, E_minus_sqrt_D
