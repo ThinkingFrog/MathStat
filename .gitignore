@@ -1,6 +1,6 @@
 # VSCode
 build/
-.vscode/
+.vscode/settings.json
 
 # Python
 __pycache__/
