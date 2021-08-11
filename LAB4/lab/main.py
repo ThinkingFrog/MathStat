@@ -1,6 +1,10 @@
-from lab.distribution import CustomDistr
+from lab.distribution import DistrManager
 
 def main():
-    for distr in ["Normal", "Cauchy", "Laplace", "Poisson", "Uniform"]:
-        for size in [20, 100]:
-            obj = CustomDistr(distr, size)
+    sizes = [20, 60, 100]
+    koeffs = [0.5, 1, 2]
+    distr_list = ["Normal", "Cauchy", "Laplace", "Poisson", "Uniform"]
+
+    manager = DistrManager(sizes, koeffs)
+    manager.draw_graphics(distr_list)
+    manager.draw_kde(distr_list)
