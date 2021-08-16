@@ -1,5 +1,6 @@
 from lab.distribution import DistrManager
 
+
 def main():
     sizes = [20, 60, 100]
     koeffs = [0.5, 1, 2]
