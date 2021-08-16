@@ -1,5 +1,7 @@
-from lab.distribution import CustomDistr
 from pathlib import Path
+
+from lab.distribution import CustomDistr
+
 
 def main():
     imgdir = Path("result")
