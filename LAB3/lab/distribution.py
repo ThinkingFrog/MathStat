@@ -1,7 +1,8 @@
+import math
+
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as scs
-import math
-import matplotlib.pyplot as plt
 import seaborn as sb
 
 
@@ -22,13 +23,15 @@ class CustomDistr:
         if self._distr_title == "Laplace":
             self._arr = scs.laplace.rvs(size=self._size, scale=1 / math.sqrt(2), loc=0)
             self._arr.sort()
- 
+
         if self._distr_title == "Poisson":
             self._arr = scs.poisson.rvs(10, size=self._size)
             self._arr.sort()
 
         if self._distr_title == "Uniform":
-            self._arr = scs.uniform.rvs(size=self._size, loc=-math.sqrt(3), scale=2 * math.sqrt(3))
+            self._arr = scs.uniform.rvs(
+                size=self._size, loc=-math.sqrt(3), scale=2 * math.sqrt(3)
+            )
             self._arr.sort()
 
     def __str__(self):
@@ -45,14 +48,14 @@ class CustomDistr:
 
     def draw(self):
         sb.set_theme(style="whitegrid")
-        sb.boxplot(data=self._arr, palette='Set1', orient='h')
+        sb.boxplot(data=self._arr, palette="Set1", orient="h")
         sb.despine(offset=10)
-        
+
         plt.xlabel("x")
         plt.ylabel("n")
         plt.title(self._distr_title)
         plt.show()
-        
+
         # plt.savefig("image/" + self._distr_title + str(self._size) + ".png")
 
     def emission_share(self, times):
