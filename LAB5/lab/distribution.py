@@ -44,10 +44,12 @@ class DistrManager:
                 n[2] += 1
             else:
                 n[3] += 1
-        
+
         return (n[0] + n[2] - n[1] - n[3]) / size
 
-    def get_coeff_stats(self, distribution: str, size: int, rho: float = 0) -> Tuple[List, List, List]:
+    def get_coeff_stats(
+        self, distribution: str, size: int, rho: float = 0
+    ) -> Tuple[List, List, List]:
         pearson, spearman, quadrant = list(), list(), list()
 
         for _ in range(self._times):
@@ -55,7 +57,7 @@ class DistrManager:
                 distr = self._generate_normal(size, rho)
             if distribution == "Mixed":
                 distr = self._generate_normal_mixed(size)
-            
+
             x, y = distr[:, 0], distr[:, 1]
             pearson.append(scs.pearsonr(x, y)[0])
             spearman.append(scs.spearmanr(x, y)[0])

@@ -10,10 +10,14 @@ def main():
 
     for size in sizes:
         for rho in rhos:
-            mean, sq_mean, disp = manager.get_coeff_stats('Normal', size, rho)
-            print(f"Normal\t Size = {size}\t Rho = {rho}\t Mean = {mean}\t Squares mean = {sq_mean}\t Dispersion = {disp}")
+            mean, sq_mean, disp = manager.get_coeff_stats("Normal", size, rho)
+            print(
+                f"Normal\t Size = {size}\t Rho = {rho}\t Mean = {mean}\t Squares mean = {sq_mean}\t Dispersion = {disp}"
+            )
 
-        mean, sq_mean, disp = manager.get_coeff_stats('Mixed', size, rho)
-        print(f"Mixed\t Size = {size}\t Mean = {mean}\t Squares mean = {sq_mean}\t Dispersion = {disp}")
+        mean, sq_mean, disp = manager.get_coeff_stats("Mixed", size, rho)
+        print(
+            f"Mixed\t Size = {size}\t Mean = {mean}\t Squares mean = {sq_mean}\t Dispersion = {disp}"
+        )
 
         manager.draw(size)
