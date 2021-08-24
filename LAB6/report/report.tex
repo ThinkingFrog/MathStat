@@ -1,0 +1,197 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[left=20mm,right=10mm, top=20mm,bottom=20mm,bindingoffset=0mm]{geometry}
+
+\setlength{\parskip}{6pt}\graphicspath{{images/}}\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+
+    \begin{titlepage}
+        \begin{center}
+            \large
+            Санкт-Петербургский политехнический университет\\Петра Великого\\
+            \vspace{0.5cm}
+            Институт прикладной математики и механики\\
+            \vspace{0.25cm}
+            Кафедра «Прикладная математика»
+            \vfill
+            \textsc{\LARGE\textbf{Отчет по лабораторной работе №6}}\\[5mm]
+            \Large
+            по дисциплине\\"Математическая статистика"
+        \end{center}
+        \vfill
+        \begin{tabular}{l p{175pt} l}
+            Выполнил студент \\ группы 3630102/80201 && Хрипунков Дмитрий Викторович
+            \vspace{0.25cm}
+            \\Проверил \\ доцент, к.ф.-м.н. && Баженов Александр Николаевич
+        \end{tabular}
+        \vfill
+        \begin{center}
+            Санкт-Петербург \\ 2021 г.
+        \end{center}
+    \end{titlepage}
+    
+\newpage
+\begin{center}
+    \tableofcontents
+    \setcounter{page}{2}
+\end{center}
+\newpage
+\begin{center}
+    \listoffigures
+\end{center}
+
+\newpage
+\section{Постановка задачи}
+\begin{enumerate}
+    \item Найти оценки коэффициентов линейной регрессии $y_i=a+bx_i+e_i$, используя 20 точек на отрезке $[-1.8,2]$ с равномерным шагом, равным 0.2. Ошибку $e_i$ считать нормально распределенной с параметрами $(0,1)$. В качестве эталонной зависимости взять $y_i=2+2x_i+e_i$. При построении оценок коэффициентов использовать два критерия: критерий наименьших квадратов и критерий наименьших модулей
+    \item Проделать то же самое для выборки, у которой в значения $y_1$ и $y_{20}$ вносятся возмущения 10 и -10
+\end{enumerate}
+
+\section{Теория}
+\subsection{Простая линейная регрессия}
+\subsubsection{Модель простой линейной регрессии}
+Регрессионную модель описания данных называют \textit{простой линейной регрессией}, если:
+\begin{equation}
+    y_i=\beta_0+\beta_1x_i+\varepsilon_i,i=\overline{1,n},
+\end{equation}
+где $x_1,...,x_n$ - заданные числа (значения фактора), $y_1,...y_n$ - наблюдаемые значения отклика, $\varepsilon_1,...,\varepsilon_n$ -  независимые, нормально распределенные $N(0,\sigma)$ с нулевым математическим ожиданием и одинаковой (неизвестной) дисперсией случайные величины (ненаблюдаемые),	$\beta_0,\beta_1$ - неизвестные параметры, подлежащие оцениванию.
+
+\subsubsection{Метод наименьших квадратов}
+Вводится критерий рассогласования отклика и регрессионной функции, оценки параметров регрессии определяются с целью минимизации рассогласования. В качестве критерия используется сумма квадратов отклонений значений отклика от значений регрессионной функции.
+Метод наименьших квадратов:
+\begin{equation}
+    Q(\beta_0,\beta_1)=\sum_{i=1}^n{\varepsilon_i^2}=\sum_{i=1}^n{(y_i-\beta_0-\beta_1x_i)^2}\rightarrow\min_{\beta_0,\beta_1}
+\end{equation}
+
+Расчётные формулы для МНК-оценок параметров $\beta_0$ и $\beta_1$:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_1}=\frac{\bar{xy}-\bar{x}\cdot\bar{y}}{\bar{x^2}-(\bar{x})^2}\\
+        \hat{\beta_0}=\bar{y}-\bar{x}\hat{\beta_1}
+    \end{array}
+    \right.
+\end{equation}
+
+\subsection{Робастные оценки коэффициентов линейной регрессии}
+Метод наименьших модулей может обеспечить робастность оценок коэффициентов линейной регрессии:
+\begin{equation}
+    \sum_{i=1}^n{|y_i-\beta_0-\beta_1x_i|}\rightarrow\min_{\beta_0,\beta_1}
+\end{equation}
+
+Робастная альтернатива оценкам коэффициентов линейной регрессии по МНК:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_1}_R=r_Q\frac{q^*_y}{q^*_x}\\
+        \hat{\beta_0}_R=medy-\hat{\beta_1}_R medx
+    \end{array}
+    \right.
+\end{equation}
+где $med x$ и $med y$ - робастные выборочные медианы, $q^*_x$ и $q^*_y$ - робастные нормированные интерквартильные широты, $r_Q$ - знаковый коэффициент корреляции. Причем:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        r_Q=\frac{1}{n}\sum_{i=1}^n{sgn(x_i-medx)sgn(y_i-medy)}\\
+        q^*_x=\frac{x_j-x_l}{k_q(n)}\\
+        q^*_y=\frac{y_j-y_l}{k_q(n)}\\
+        l=\begin{cases}
+                [\frac{n}{4}]+1\text{ при }\frac{n}{4}\text{ - дробном}\\ 
+                \frac{n}{4}\text{ при }\frac{n}{4}\text{ - целом}
+            \end{cases}\\
+        j=n-l+1
+    \end{array}
+    \right.
+\end{equation}
+
+Уравнение регрессии здесь имеет вид:
+\begin{equation}
+    y=\hat{\beta_0}_R+\hat{\beta_1}_Rx
+\end{equation}
+
+\section{Реализация}
+Лабораторная работа выполнена на языке Python в виртуальной среде Anaconda с интерпретатором версии 3.9 в среде разработки Visual Studio Code. Дополнительные зависимости:
+\begin{itemize}
+    \item scipy
+    \item numpy
+    \item matplotlib
+\end{itemize}
+
+Исходный код размещён в git-репозиторие на GitHub: \\ https://github.com/ThinkingFrog/MathStat
+
+\section {Результаты}
+\subsection{Выборка без возмущения}
+Оценка коэффициентов по МНК:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_0}=2.29145645\\
+        \hat{\beta_1}=2.23792704
+    \end{array}
+    \right.
+\end{equation}
+
+Удаленность по мере в пространстве $l^2:2.90468199$
+
+Оценка коэффициентов по МНМ:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_0}_R=1.97457336\\
+        \hat{\beta_1}_R=2.22514333
+    \end{array}
+    \right.
+\end{equation}
+
+Удаленность по мере в пространстве $l^1:4.07800659$
+\begin{figure}[H]
+    \centering
+    \includegraphics{Casual.png}
+    \caption{Выборка без возмущения}
+\end{figure}
+
+\subsection{Выборка с возмущением}
+Оценка коэффициентов по МНК:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_0}=2.29145645\\
+        \hat{\beta_1}=0.65897968
+    \end{array}
+    \right.
+\end{equation}
+
+Удаленность по мере в пространстве $l^2:42.61603967$
+
+Оценка коэффициентов по МНМ:
+\begin{equation}
+    \left\{
+    \begin{array}{ll}
+        \hat{\beta_0}_R=2.77683313\\
+        \hat{\beta_1}_R=1.47774058
+    \end{array}
+    \right.
+\end{equation}
+
+Удаленность по мере в пространстве $l^1:15.20386112$
+\begin{figure}[H]
+    \centering
+    \includegraphics{Error.png}
+    \caption{Выборка с возмущением}
+\end{figure}
+
+\section{Обсуждение}
+Метод наименьших квадратов и наименьших модулей работают в разных пространствах: $l^2$ и $l^1$. Соответственно сравнивать удалённость можно только в контексте их пространств.
+
+По результатам эксперимента можно сделать вывод, что МНК даёт более точные оценки коэффициентов, но МНМ более устойчив к возмущениям, поскольку использует робастные величины.
+\end{document}
