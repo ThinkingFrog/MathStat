@@ -99,6 +99,7 @@ class DistrManager:
         print(f"\n{distr_name} distribution:")
         print(f"mu = {np.around(np.mean(distr), decimals=8)}")
         print(f"sigma = {np.around(np.std(distr), decimals=8)}")
+        print(f"k = {k}")
         print(f"chi_2 = {scs.chi2.ppf(self._p, k - 1)}")
 
         limits = np.linspace(-1.1, 1.1, num=k - 1)
