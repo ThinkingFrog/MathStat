@@ -11,9 +11,13 @@ class SignalManager:
     _start: List
     _finish: List
     _types: List
-    _zones = List
-    _zone_types = List
-    _signal_data = List[List]
+    _zones: List
+    _zone_types: List
+    _signal_data: List[List]
+    _signal_length: int
+
+    def __init__(self) -> None:
+        self._signal_length = 1024
 
     def _data(self, zones: List) -> List[List]:
         return [
@@ -74,7 +78,7 @@ class SignalManager:
                 ]
             )
 
-        data = np.reshape(data, (data.shape[1] // 1024, 1024))
+        data = np.reshape(data, (data.shape[1] // self._signal_length, self._signal_length))
         self._signal = data[1]
 
     def save_areas(self) -> None:
