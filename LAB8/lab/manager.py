@@ -15,9 +15,11 @@ class SignalManager:
     _zone_types: List
     _signal_data: List[List]
     _signal_length: int
+    _signal_part: int
 
     def __init__(self) -> None:
         self._signal_length = 1024
+        self._signal_part = 18
 
     def _data(self, zones: List) -> List[List]:
         return [
@@ -79,7 +81,7 @@ class SignalManager:
             )
 
         data = np.reshape(data, (data.shape[1] // self._signal_length, self._signal_length))
-        self._signal = data[1]
+        self._signal = data[self._signal_part]
 
     def save_areas(self) -> None:
         hist = plt.hist(self._signal, bins=self._bin())
