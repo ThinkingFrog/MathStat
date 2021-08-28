@@ -96,7 +96,7 @@ class SignalManager:
             elif x[idx] == x_sorted[len(x) - 2]:
                 types[idx] = "signal"
             else:
-                types[idx] = "переход"
+                types[idx] = "transision"
 
         self._start = start_y
         self._finish = finish_y
