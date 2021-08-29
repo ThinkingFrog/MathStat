@@ -19,7 +19,7 @@ class SignalManager:
 
     def __init__(self) -> None:
         self._signal_length = 1024
-        self._signal_part = 18
+        self._signal_part = 73
 
     def _data(self, zones: List) -> List[List]:
         return [
@@ -58,8 +58,8 @@ class SignalManager:
     def _fisher(self, signal_part: np.ndarray, k: int) -> float:
         data = np.reshape(signal_part, (k, math.ceil(signal_part.size / k)))
         f = self._inter(data) / self._intra(data)
-        print("k = " + str(k))
-        print("F = " + str(f))
+        print(f"k = {np.around(k, decimals=8)}")
+        print(f"F = {np.around(f, decimals=8)}")
         return f
 
     def _k(self, num: int) -> int:
