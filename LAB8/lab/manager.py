@@ -80,7 +80,9 @@ class SignalManager:
                 ]
             )
 
-        data = np.reshape(data, (data.shape[1] // self._signal_length, self._signal_length))
+        data = np.reshape(
+            data, (data.shape[1] // self._signal_length, self._signal_length)
+        )
         self._signal = data[self._signal_part]
 
     def save_areas(self) -> None:
@@ -135,9 +137,9 @@ class SignalManager:
 
     def print_params(self) -> None:
         fishers = list()
-        for i in range(len(self._zones)):
-            start = self._zones[i][0]
-            finish = self._zones[i][1]
+        for idx in range(len(self._zones)):
+            start = self._zones[idx][0]
+            finish = self._zones[idx][1]
             k = self._k(finish - start)
 
             while k == finish - start:
