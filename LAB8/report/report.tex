@@ -1,0 +1,143 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[left=20mm,right=10mm, top=20mm,bottom=20mm,bindingoffset=0mm]{geometry}
+
+\setlength{\parskip}{6pt}\graphicspath{{images/}}\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+
+    \begin{titlepage}
+        \begin{center}
+            \large
+            Санкт-Петербургский политехнический университет\\Петра Великого\\
+            \vspace{0.5cm}
+            Институт прикладной математики и механики\\
+            \vspace{0.25cm}
+            Кафедра «Прикладная математика»
+            \vfill
+            \textsc{\LARGE\textbf{Отчет по лабораторной работе №8}}\\[5mm]
+            \Large
+            по дисциплине\\"Математическая статистика"
+        \end{center}
+        \vfill
+        \begin{tabular}{l p{175pt} l}
+            Выполнил студент \\ группы 3630102/80201 && Хрипунков Дмитрий Викторович
+            \vspace{0.25cm}
+            \\Проверил \\ доцент, к.ф.-м.н. && Баженов Александр Николаевич
+        \end{tabular}
+        \vfill
+        \begin{center}
+            Санкт-Петербург \\ 2021 г.
+        \end{center}
+    \end{titlepage}
+    
+\newpage
+\begin{center}
+    \tableofcontents
+    \setcounter{page}{2}
+\end{center}
+\newpage
+\begin{center}
+    \listoffigures
+\end{center}
+
+\newpage
+\section{Постановка задачи}
+\begin{enumerate}
+    \item Провести дисперсионный анализ с применением критерия Фишера по данным регистраторов для одного сигнала
+    \item Определить области однородности сигнала, переходные области, шум/фон
+    \item Длину сигнала считать равной 1024
+\end{enumerate}
+
+\section{Теория}
+\subsection{Величины дисперсионного анализа}
+Необходимо вычислить следующие величины:
+\begin{enumerate}
+    \item \textit{Внутригрупповая дисперсия}
+        \begin{equation}
+            s_{IntraGroup}^2=\frac{1}{k}\sum_{i=1}^ks_i^2=\frac{1}{k}\sum_{i=1}^k\frac{\sum_{j=1}^n(x_{ij}-X_{cp})^2}{k-1},
+        \end{equation}
+        где $X_{cp}$ - среднее для части выборки, $k$ - количество частей выборки, $n$ - количество элементов в рассматриваемой части выборки.\\Внутригрупповая дисперсия является дисперсией совокупности и рассматривается как среднее значение выборочных дисперсий.
+    \item \textit{Межгрупповая дисперсия}
+        \begin{equation}
+            s_{InterGroup}^2=k\frac{\sum_{i=1}^k(X_{i_{cp}}-X_{cp})^2}{k-1},
+        \end{equation}
+        где $X_{1_{cp}},X_{2_{cp}},...,X_{k_{cp}}$ - среднее значение для подвыборок, а $X_{cp}$ - среднее значение этих cредних значений подвыборок
+    \item \textit{Значение критерия Фишера}
+        \begin{equation}
+            F=\frac{s_{InterGroup}^2}{s_{IntraGroup}^2}
+        \end{equation}
+\end{enumerate}
+
+\section{Ход работы}
+Лабораторная работа выполнена на языке Python в виртуальной среде Anaconda с интерпретатором версии 3.9 в среде разработки Visual Studio Code. Дополнительные зависимости:
+\begin{itemize}
+    \item numpy
+    \item matplotlib
+\end{itemize}
+
+Исходный код размещён в git-репозитории на GitHub: \\ https://github.com/ThinkingFrog/MathStat
+
+Алгоритм:
+\begin{enumerate}
+    \item Извлечь сигнал из исходных данный в файле \textit{wave\_ampl.txt}. Из условия известно, что сигнал имеет длину 1024, поэтому необходимо выбрать начальный индекс, кратный длине сигнала
+    \item Построить гистограмму с соответствующими столбцами:
+        \begin{itemize}
+            \item Фон - столбец с наибольшим значением
+            \item Переходы - столбцы с малыми значениями
+            \item Сигнал - второй по величине столбец после фона
+        \end{itemize}
+    \item Устранить явные выбросы, для этого был использован медианный фильтр (выброс = среднее арифметическое его соседей). Получается сглаженный сигнал
+    \item Разделить сигнал на области: сигнал, фон и переходные процессы
+    \item Определить тип области по критерию Фишера:
+        \begin{itemize}
+            \item Если значение критерия Фишера велико, это будут переходные процессы
+            \item Если значение критерия Фишера находится вблизи 1, эти области однородны
+        \end{itemize}
+\end{enumerate}
+
+\section {Результаты}
+Рассматривается сигнал с номером 74
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Signal.png}
+    \caption{График входного сигнала}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Signal_hist.png}
+    \caption{Гистограмма входного сигнала}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Zones.png}
+    \caption{Области сигнала}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Область & Тип & Количество разбиений & Критерий Фишера\\\hline
+        [0, 239] & Фон & 4 & 0.07777439\\\hline
+        [239, 307] & Переход & 4 & 17.37498936\\\hline
+        [307, 732] & Сигнал & 5 & 0.236059\\\hline
+        [732, 800] & Переход & 4 & 17.16207435\\\hline
+        [800, 1023] & Фон & 4 & 0.56926051\\\hline
+    \end{tabular}
+    \caption{Характеристика выделенных областей}
+\end{table}
+
+\section{Обсуждение}
+Данные были разделены на 5 частей: фон, переход, сигнал, переход, фон. Значение критерия Фишера для обеих областей фона и области сигнала близки к 1, поэтому эти области однородны. При этом обе области перехода неоднородны, так как имеют значения критерия Фишера много больше 1.
+
+График сигнала симметричен по вертикальной оси относительно центра и не содержит заметных выбросов.
+\end{document}
