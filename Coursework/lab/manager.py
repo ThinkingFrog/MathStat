@@ -115,7 +115,7 @@ class SignalManager:
         plt.plot(range(len(signal_interpolation)), signal_interpolation)
         plt.show()
 
-    def draw_scale(self, signal_data: List[List[float]]) -> None:
+    def get_scaled(self, signal_data: List[List[float]]) -> List[float]:
         signal_average_data = [np.mean(subarr) for subarr in signal_data]
         up_bound = max(signal_average_data)
         lo_bound = min(signal_average_data)
@@ -126,6 +126,11 @@ class SignalManager:
                 signal_scale_data.append(val / up_bound)
             elif val < 0:
                 signal_scale_data.append(-val / lo_bound)
+
+        return signal_scale_data
+
+    def draw_scale(self, signal_data: List[List[float]]) -> None:
+        signal_scale_data = self.get_scaled(signal_data)
 
         plt.plot(range(len(signal_scale_data)), signal_scale_data)
         plt.show()
