@@ -46,4 +46,12 @@ def main():
         signal_data, [level0_data, level1_data, level2_data, level3_data, level4_data]
     )
 
-    manager.draw_signal_interpolation(None)
+    manager.draw_signal_interpolation(
+        signal_data,
+        manager.get_average(
+            [level0_data, level1_data, level2_data, level3_data, level4_data]
+        ),
+        [-0.5, -0.25, 0.0, 0.25, 0.5],
+    )
+
+    manager.draw_scale(signal_data)
