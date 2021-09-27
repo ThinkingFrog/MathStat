@@ -232,3 +232,18 @@ class SignalManager:
         plt.title(title)
         plt.hist(y, bins=16)
         plt.show()
+
+    def plot_regression_coeffs(
+        self,
+        levels: List[float],
+        levels_data: List[float],
+        title: str = "",
+        xlabel: str = "",
+        ylabel: str = "",
+    ) -> None:
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(title)
+        plt.scatter(levels_data, levels)
+        plt.plot(levels_data, levels)
+        plt.show()

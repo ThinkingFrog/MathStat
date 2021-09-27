@@ -53,6 +53,16 @@ def main():
     levels_data = np.array(
         [level1_data, level2_data, level0_data, level3_data, level4_data]
     )
+    manager.plot_regression_coeffs(
+        levels,
+        [
+            level1_data[0],
+            level2_data[0],
+            level0_data[0],
+            level3_data[0],
+            level4_data[0],
+        ],
+    )
     signal_data = manager.get_interpolated(signal_data, levels, levels_data)
     all_signals_data = manager.get_interpolated(all_signals_data, levels, levels_data)
     manager.plot(
