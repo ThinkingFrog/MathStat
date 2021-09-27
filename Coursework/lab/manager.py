@@ -215,7 +215,6 @@ class SignalManager:
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(title)
-        plt.xlabel("time(ps)")
         plt.scatter(t_i, [1 for _ in range(num_of_dots)], marker=".")
         plt.show()
 
@@ -231,6 +230,5 @@ class SignalManager:
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(title)
-        plt.xlabel("time")
         plt.hist(y, bins=16)
         plt.show()
