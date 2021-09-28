@@ -107,4 +107,4 @@ def main():
     all_signals_data = manager.set_amplitude(all_sin_data, ampl)
 
     manager.plot_time_delta(signal_data, 40, title="Time periods", xlabel="Time")
-    manager.hist(all_signals_data, title="Time histogram", xlabel="Time")
+    manager.hist(all_signals_data, title="Time histogram", xlabel="Time (ns)")

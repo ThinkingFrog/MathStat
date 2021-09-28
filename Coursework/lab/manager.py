@@ -241,9 +241,9 @@ class SignalManager:
         xlabel: str = "",
         ylabel: str = "",
     ) -> None:
+        plt.scatter(levels_data, levels)
+        plt.plot(levels_data, levels)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(title)
-        plt.scatter(levels_data, levels)
-        plt.plot(levels_data, levels)
         plt.show()
