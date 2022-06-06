@@ -37,25 +37,23 @@ class CustomDistr:
         return self._distr_title
 
     def z_tr(self) -> float:
-        r = int(len(self._arr) / 4)
-        sum = 0
-        for i in range(r + 1, len(self._arr) - r + 1):
-            sum += self._arr[i]
+        r = len(self._arr) // 4
+        sum = sum(self._arr[i] for i in range(r + 1, len(self._arr) - r + 1))
         return (1 / (len(self._arr) - 2 * r)) * sum
 
     def count_ave_stats(self, times) -> Tuple[List[int], List[int]]:
-        list_mean = list()
-        list_median = list()
-        list_zr = list()
-        list_zq = list()
-        list_ztr = list()
+        list_mean = []
+        list_median = []
+        list_zr = []
+        list_zq = []
+        list_ztr = []
 
-        E_list = list()
-        D_list = list()
-        E_plus_sqrt_D = list()
-        E_minus_sqrt_D = list()
+        E_list = []
+        D_list = []
+        E_plus_sqrt_D = []
+        E_minus_sqrt_D = []
 
-        for idx in range(times):
+        for _ in range(times):
             self._generate_distr()
 
             list_mean.append(np.mean(self._arr))

@@ -53,11 +53,11 @@ class DistrManager:
         pearson, spearman, quadrant = list(), list(), list()
 
         for _ in range(self._times):
-            if distribution == "Normal":
-                distr = self._generate_normal(size, rho)
             if distribution == "Mixed":
                 distr = self._generate_normal_mixed(size)
 
+            elif distribution == "Normal":
+                distr = self._generate_normal(size, rho)
             x, y = distr[:, 0], distr[:, 1]
             pearson.append(scs.pearsonr(x, y)[0])
             spearman.append(scs.spearmanr(x, y)[0])

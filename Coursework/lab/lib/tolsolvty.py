@@ -245,10 +245,7 @@ def tolsolvty(infA, supA, infb, supb, *varargin):
         x_nonneg = x >= 0
         dl = infA_mc * x_neg + supA_mc * x_nonneg
         ds = supA_mc * x_neg + infA_mc * x_nonneg
-        if -infs[mc, 0] <= sups[mc, 0]:
-            g = weight[mc, 0] * ds
-        else:
-            g = -weight[mc, 0] * dl
+        g = weight[mc, 0] * ds if -infs[mc, 0] <= sups[mc, 0] else -weight[mc, 0] * dl
         return f, g, tt
 
     ################################################################################

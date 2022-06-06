@@ -19,13 +19,6 @@ class DistrManager:
     ) -> Tuple[List, List, List, np.linspace]:
         left, right = -4, 4
 
-        if scs_distr == "Normal":
-            arr = scs.norm.rvs(size=size)
-            arr.sort()
-            x = np.linspace(left, right, 1000)
-            pdf = scs.norm.pdf(x)
-            cdf = scs.norm.cdf(x)
-
         if scs_distr == "Cauchy":
             arr = scs.cauchy.rvs(size=size)
             arr.sort()
@@ -33,14 +26,21 @@ class DistrManager:
             pdf = scs.cauchy.pdf(x)
             cdf = scs.cauchy.cdf(x)
 
-        if scs_distr == "Laplace":
+        elif scs_distr == "Laplace":
             arr = scs.laplace.rvs(size=size, scale=1 / math.sqrt(2), loc=0)
             arr.sort()
             x = np.linspace(left, right, 1000)
             pdf = scs.laplace.pdf(x, loc=0, scale=1 / math.sqrt(2))
             cdf = scs.laplace.cdf(x, loc=0, scale=1 / math.sqrt(2))
 
-        if scs_distr == "Poisson":
+        elif scs_distr == "Normal":
+            arr = scs.norm.rvs(size=size)
+            arr.sort()
+            x = np.linspace(left, right, 1000)
+            pdf = scs.norm.pdf(x)
+            cdf = scs.norm.cdf(x)
+
+        elif scs_distr == "Poisson":
             arr = scs.poisson.rvs(10, size=size)
             arr.sort()
             left, right = 6, 14
@@ -48,7 +48,7 @@ class DistrManager:
             pdf = scs.poisson(10).pmf(x)
             cdf = scs.poisson(10).cdf(x)
 
-        if scs_distr == "Uniform":
+        elif scs_distr == "Uniform":
             arr = scs.uniform.rvs(size=size, loc=-math.sqrt(3), scale=2 * math.sqrt(3))
             arr.sort()
             x = np.linspace(left, right, 1000)
@@ -97,6 +97,6 @@ class DistrManager:
                     axs[idx].legend(loc="upper right")
                     axs[idx].set(xlabel="x", ylabel="f(x)")
                     axs[idx].set_xlim([left, right])
-                    axs[idx].set_title("h = " + str(koeff))
+                    axs[idx].set_title(f"h = {str(koeff)}")
                 figures.suptitle(f"{distr} KDE n = {size}")
                 plt.show()

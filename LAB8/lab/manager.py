@@ -136,7 +136,7 @@ class SignalManager:
         self._signal_data = self._data(zones)
 
     def print_params(self) -> None:
-        fishers = list()
+        fishers = []
         for idx in range(len(self._zones)):
             start = self._zones[idx][0]
             finish = self._zones[idx][1]
@@ -174,11 +174,12 @@ class SignalManager:
             else:
                 color = "green"
             plt.plot(
-                [el for el in range(data[0], data[1])],
+                list(range(data[0], data[1])),
                 self._signal_data[idx],
                 color=color,
                 label=self._zone_types[idx],
             )
+
 
         plt.grid()
         plt.legend()

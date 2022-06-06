@@ -60,7 +60,7 @@ class CustomDistr:
 
     def emission_share(self, times):
         count = 0
-        for idx in range(times):
+        for _ in range(times):
             self._generate_distr()
             count += self.count_emissions()
         share = count / (self._size * times)

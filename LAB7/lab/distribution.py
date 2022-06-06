@@ -45,7 +45,7 @@ class DistrManager:
             np.multiply((n_array - size * p_array), (n_array - size * p_array)),
             p_array * size,
         )
-        rows = list()
+        rows = []
 
         for idx in range(len(n_array)):
             if idx == 0:

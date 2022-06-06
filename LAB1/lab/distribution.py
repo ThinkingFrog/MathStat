@@ -10,19 +10,19 @@ class CustomDistr:
     def __init__(self, scs_distr: str, size: int) -> None:
         self._distr_title = scs_distr
 
-        if scs_distr == "Normal":
-            self._dens = scs.norm()
-            self._hist = scs.norm.rvs(size=size)
         if scs_distr == "Cauchy":
             self._dens = scs.cauchy()
             self._hist = scs.cauchy.rvs(size=size)
-        if scs_distr == "Laplace":
+        elif scs_distr == "Laplace":
             self._dens = scs.laplace(scale=1 / math.sqrt(2), loc=0)
             self._hist = scs.laplace.rvs(size=size, scale=1 / math.sqrt(2), loc=0)
-        if scs_distr == "Poisson":
+        elif scs_distr == "Normal":
+            self._dens = scs.norm()
+            self._hist = scs.norm.rvs(size=size)
+        elif scs_distr == "Poisson":
             self._dens = scs.poisson(10)
             self._hist = scs.poisson.rvs(10, size=size)
-        if scs_distr == "Uniform":
+        elif scs_distr == "Uniform":
             self._dens = scs.uniform(loc=-math.sqrt(3), scale=2 * math.sqrt(3))
             self._hist = scs.uniform.rvs(
                 size=size, loc=-math.sqrt(3), scale=2 * math.sqrt(3)
